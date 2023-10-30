@@ -1,0 +1,38 @@
+~ start
+
+You: What a bad day!
+You: Now I just want to head home early to see my wife!
+
+do run_animation("phonering_cutscene")
+=> END
+
+~ phone_ring
+You: I wonder who's calling me
+You: Oh
+You: It's my wife
+You: What a coincidence
+(Open phone)
+You: [[Hey | Hi]] honey, what's up?
+Anna: Nothing, I just wanna listen to your voice
+Anna: Remember to come home early, and drive save, alright!
+Anna: I have made your special dish today, a cream stew soup!
+You: Awesome! I'm coming quick!
+Anna: Waiting for you!
+(Close phone)
+You: I need to get home quick
+do run_animation("light_flickering")
+=> END
+
+
+~ light_error
+You: Wait, what happen to my light?
+=> car_crash
+
+
+~ car_crash
+do run_animation("car_lost_control")
+You: [color=red] AAAAAAAAAAAAAAAGRHHHHH!!!
+
+do run_animation("crash")
+
+=> END

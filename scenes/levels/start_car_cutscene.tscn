@@ -1,0 +1,271 @@
+[gd_scene load_steps=19 format=3 uid="uid://bh23ju0l5hndw"]
+
+[ext_resource type="Script" path="res://scenes/levels/StartCarCutscene.gd" id="1_4r7w6"]
+[ext_resource type="AudioStream" uid="uid://cjwhbm1cued7d" path="res://assets/sounds/mixkit-office-telephone-ring-1350.mp3" id="2_jq3g6"]
+[ext_resource type="AudioStream" uid="uid://coj6c0rx8bbsr" path="res://assets/sounds/car-accident-with-squeal-and-crash-6054.mp3" id="3_ryo2h"]
+[ext_resource type="Script" path="res://scenes/RoadSpawner.gd" id="4_7sr3e"]
+[ext_resource type="PackedScene" uid="uid://bcvpa7kgb3kbp" path="res://scenes/road_sample.tscn" id="5_xmstn"]
+[ext_resource type="PackedScene" uid="uid://6jg0s33nm3kr" path="res://scenes/car.tscn" id="6_ha8ds"]
+[ext_resource type="PackedScene" uid="uid://ck1nraswx3lgv" path="res://scenes/dialogue_action/dialogue_action.scn" id="7_ff58f"]
+[ext_resource type="Resource" uid="uid://b6tjcssfals1i" path="res://dialogues/car_cutscene.dialogue" id="8_24mp8"]
+
+[sub_resource type="Animation" id="Animation_6mqyv"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_u1aa0"]
+resource_name = "car_lost_control"
+loop_mode = 1
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("StartCarCutscene/sedan/CarAnimation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": PackedStringArray("lost_control"),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_h8rua"]
+resource_name = "crash"
+length = 3.0
+tracks/0/type = "audio"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("StartCarCutscene/Sound")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": [{
+"end_offset": 0.7,
+"start_offset": 0.0,
+"stream": ExtResource("3_ryo2h")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/0/use_blend = true
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("StartCarCutscene")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(2.7),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"change_to_first_scene"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("StartCarCutscene/ColorRect:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.1, 1.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_crrob"]
+resource_name = "first_cutscene"
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("StartCarCutscene/DialogueAction")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["start"],
+"method": &"run_dialogue"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_3gdno"]
+resource_name = "light_flickering"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("StartCarCutscene/sedan/sedan2/SpotLight3D:light_energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3, 0.4, 0.5, 0.9, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [16.0, 0.0, 0.0, 16.0, 0.0, 0.0, 16.0]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("StartCarCutscene/DialogueAction")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["light_error"],
+"method": &"run_dialogue"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_yd10r"]
+resource_name = "phonering_cutscene"
+length = 3.0
+tracks/0/type = "audio"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("StartCarCutscene/Sound")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("2_jq3g6")
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("2_jq3g6")
+}],
+"times": PackedFloat32Array(0, 1.7)
+}
+tracks/0/use_blend = true
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("StartCarCutscene/DialogueAction")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["phone_ring"],
+"method": &"run_dialogue"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fsbbw"]
+_data = {
+"RESET": SubResource("Animation_6mqyv"),
+"car_lost_control": SubResource("Animation_u1aa0"),
+"crash": SubResource("Animation_h8rua"),
+"first_cutscene": SubResource("Animation_crrob"),
+"light_flickering": SubResource("Animation_3gdno"),
+"phonering_cutscene": SubResource("Animation_yd10r")
+}
+
+[sub_resource type="Animation" id="Animation_2kr40"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sedan2:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("sedan2:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_wyyma"]
+resource_name = "lost_control"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("sedan2:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(0.63728, 0.435275, 1.86607),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(1.34642, 0, 0), Vector3(-1.43319, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("sedan2:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(0.840896, 0.435275, 1.86607),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, -0.66148, 0), Vector3(0, 0.329867, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y6frt"]
+_data = {
+"RESET": SubResource("Animation_2kr40"),
+"lost_control": SubResource("Animation_wyyma")
+}
+
+[node name="StartCarCutscene" type="Node3D"]
+script = ExtResource("1_4r7w6")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../..")
+autoplay = "first_cutscene"
+libraries = {
+"": SubResource("AnimationLibrary_fsbbw")
+}
+
+[node name="CarFollowCamera" type="Camera3D" parent="."]
+transform = Transform3D(-0.321964, -0.812404, 0.486147, -0.0929517, 0.538133, 0.837719, -0.942178, 0.224527, -0.248774, 9.382, 8.943, -12.707)
+
+[node name="RoadSpawner" type="Node3D" parent="."]
+script = ExtResource("4_7sr3e")
+road_resource = ExtResource("5_xmstn")
+
+[node name="sedan" parent="." instance=ExtResource("6_ha8ds")]
+
+[node name="SpotLight3D" parent="sedan/sedan2" index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0213075, 0.474672, -0.556312)
+spot_range = 7.33591
+spot_angle = 27.8605
+
+[node name="CarAnimation" type="AnimationPlayer" parent="sedan"]
+libraries = {
+"": SubResource("AnimationLibrary_y6frt")
+}
+
+[node name="DialogueAction" parent="." instance=ExtResource("7_ff58f")]
+dialogue_resource = ExtResource("8_24mp8")
+
+[node name="Sound" type="AudioStreamPlayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[editable path="sedan"]
